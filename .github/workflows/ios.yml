@@ -44,6 +44,7 @@ jobs:
         if: env.IS_RELEASE != 'true' || env.HAS_ASC_KEY != 'true'
         working-directory: ios/App
         run: |
+          set -o pipefail
           xcodebuild -project App.xcodeproj -scheme App -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO build | tail -50
@@ -58,6 +59,7 @@ jobs:
         if: env.IS_RELEASE == 'true' && env.HAS_ASC_KEY == 'true'
         working-directory: ios/App
         run: |
+          set -o pipefail
           VERSION="${MARKETING_VERSION#v}"
           xcodebuild -project App.xcodeproj -scheme App -configuration Release \
             -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
